@@ -9,9 +9,10 @@ public class ControlNave : MonoBehaviour
 
 	// Fuerza de lanzamiento del disparo
 	private float fuerza = 0.5f;
-
+	private float fuerza2 = 15.00f;
 	// Acceso al prefab del disparo
 	public Rigidbody2D disparo;
+	public Rigidbody2D disparo2;
 
 	// Use this for initialization
 	void Start ()
@@ -55,6 +56,12 @@ public class ControlNave : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			disparar ();
 		}
+		if (Input.GetKeyDown (KeyCode.Mouse0)) {
+			disparmejora();
+		}
+
+
+
 	}
 
 	void disparar ()
@@ -71,5 +78,18 @@ public class ControlNave : MonoBehaviour
 		// Lanzarlo
 		d.AddForce (Vector2.up * fuerza, ForceMode2D.Impulse);	
 	}
+
+	void disparmejora()
+	{
+		Rigidbody2D d2 = (Rigidbody2D)Instantiate (disparo2, transform.position, transform.rotation);
+
+		d2.gravityScale = 0;
+
+		d2.transform.Translate (Vector2.up * 0.7f);
+
+		d2.AddForce (Vector2.up * fuerza2, ForceMode2D.Impulse);
+
+	}
+
 
 }

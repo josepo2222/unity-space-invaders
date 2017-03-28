@@ -51,6 +51,25 @@ public class ControlAlien : MonoBehaviour
 
 		} else if (coll.gameObject.tag == "nave") {
 			SceneManager.LoadScene ("Nivel1");
+		}else if (coll.gameObject.tag == "disparo2") {
+
+			// Sonido de explosión
+			GetComponent<AudioSource> ().Play ();
+
+			// Sumar la puntuación al marcador
+			marcador.GetComponent<ControlMarcador> ().puntos += puntos;
+
+			// El disparo desaparece (cuidado, si tiene eventos no se ejecutan)
+			Destroy (coll.gameObject);
+
+			// El alien desaparece (no hace falta retraso para la explosión, está en otro objeto)
+			efectoExplosion.GetComponent<AudioSource> ().Play ();
+			Destroy (gameObject);
+
 		}
+
+
+
+
 	}
 }

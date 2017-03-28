@@ -79,7 +79,7 @@ public class GeneradorAliens : MonoBehaviour
 						// Nos movemos a la derecha (todos los aliens que queden)
 						aliens [i, j].transform.Translate (Vector2.left * velocidad * Time.deltaTime);
 
-						// Comprobamos si hemos tocado el borde
+						// Comprobamos si hemos tocado el borde udemi
 						if (aliens [i, j].transform.position.x < limiteIzq) {
 							limiteAlcanzado = true;
 						}
