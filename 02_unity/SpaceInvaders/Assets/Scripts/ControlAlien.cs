@@ -49,7 +49,7 @@ public class ControlAlien : MonoBehaviour
 			efectoExplosion.GetComponent<AudioSource> ().Play ();
 			Destroy (gameObject);
 
-		} else if (coll.gameObject.tag == "nave") {
+		} else if (coll.gameObject.tag == "Nave") {
 			SceneManager.LoadScene ("Nivel1");
 		}else if (coll.gameObject.tag == "disparo2") {
 

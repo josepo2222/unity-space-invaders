@@ -4,92 +4,124 @@ using System.Collections;
 public class ControlNave : MonoBehaviour
 {
 
-	// Velocidad a la que se desplaza la nave (medido en u/s)
-	private float velocidad = 20f;
+    // Velocidad a la que se desplaza la nave (medido en u/s)
+    private float velocidad = 20f;
 
-	// Fuerza de lanzamiento del disparo
-	private float fuerza = 0.5f;
-	private float fuerza2 = 15.00f;
-	// Acceso al prefab del disparo
-	public Rigidbody2D disparo;
-	public Rigidbody2D disparo2;
+    // Fuerza de lanzamiento del disparo
+    private float fuerza = 0.5f;
+    private float fuerza2 = 15.00f;
+    // Acceso al prefab del disparo
+    public Rigidbody2D disparo;
+    public Rigidbody2D disparo2;
 
-	// Use this for initialization
-	void Start ()
-	{
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		// Calculamos la anchura visible de la cámara en pantalla
-		float distanciaHorizontal = Camera.main.orthographicSize * Screen.width / Screen.height;
+    //acceso al sonido de mejora
+    public GameObject sonidoMejora;
 
-		// Calculamos el límite izquierdo y el derecho de la pantalla
-		float limiteIzq = -1.0f * distanciaHorizontal;
-		float limiteDer = 1.0f * distanciaHorizontal;
+    // Use this for initialization
+    void Start()
+    {
+        sonidoMejora = GameObject.Find("sonidoMejora");
+    }
 
-		// Tecla: Izquierda
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+    // Update is called once per frame
+    void Update()
+    {
+        // Calculamos la anchura visible de la cámara en pantalla
+        float distanciaHorizontal = Camera.main.orthographicSize * Screen.width / Screen.height;
 
-			// Nos movemos a la izquierda hasta llegar al límite para entrar por el otro lado
-			if (transform.position.x > limiteIzq) {
-				transform.Translate (Vector2.left * velocidad * Time.deltaTime);
-			} else {
-				transform.position = new Vector2 (limiteDer, transform.position.y);			
-			}
-		}
+        // Calculamos el límite izquierdo y el derecho de la pantalla
+        float limiteIzq = -1.0f * distanciaHorizontal;
+        float limiteDer = 1.0f * distanciaHorizontal;
 
-		// Tecla: Derecha
-		if (Input.GetKey (KeyCode.RightArrow)) {
+        // Tecla: Izquierda
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
 
-			// Nos movemos a la derecha hasta llegar al límite para entrar por el otro lado
-			if (transform.position.x < limiteDer) {
-				transform.Translate (Vector2.right * velocidad * Time.deltaTime);
-			} else {
-				transform.position = new Vector2 (limiteIzq, transform.position.y);			
-			}
-		}
+            // Nos movemos a la izquierda hasta llegar al límite para entrar por el otro lado
+            if (transform.position.x > limiteIzq)
+            {
+                transform.Translate(Vector2.left * velocidad * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = new Vector2(limiteDer, transform.position.y);
+            }
+        }
 
-		// Disparo
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			disparar ();
-		}
-		if (Input.GetKeyDown (KeyCode.Mouse0)) {
-			disparmejora();
-		}
+        // Tecla: Derecha
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
 
+            // Nos movemos a la derecha hasta llegar al límite para entrar por el otro lado
+            if (transform.position.x < limiteDer)
+            {
+                transform.Translate(Vector2.right * velocidad * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = new Vector2(limiteIzq, transform.position.y);
+            }
+        }
 
-
-	}
-
-	void disparar ()
-	{
-		// Hacemos copias del prefab del disparo y las lanzamos
-		Rigidbody2D d = (Rigidbody2D)Instantiate (disparo, transform.position, transform.rotation);
-
-		// Desactivar la gravedad para este objeto, si no, ¡se cae!
-		d.gravityScale = 0;
-
-		// Posición de partida, en la punta de la nave
-		d.transform.Translate (Vector2.up * 0.7f);
-
-		// Lanzarlo
-		d.AddForce (Vector2.up * fuerza, ForceMode2D.Impulse);	
-	}
-
-	void disparmejora()
-	{
-		Rigidbody2D d2 = (Rigidbody2D)Instantiate (disparo2, transform.position, transform.rotation);
-
-		d2.gravityScale = 0;
-
-		d2.transform.Translate (Vector2.up * 0.7f);
-
-		d2.AddForce (Vector2.up * fuerza2, ForceMode2D.Impulse);
-
-	}
+        // Disparo
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            disparar();
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            disparmejora();
+        }
 
 
+
+    }
+
+    void disparar()
+    {
+        // Hacemos copias del prefab del disparo y las lanzamos
+        Rigidbody2D d = (Rigidbody2D)Instantiate(disparo, transform.position, transform.rotation);
+
+        // Desactivar la gravedad para este objeto, si no, ¡se cae!
+        d.gravityScale = 0;
+
+        // Posición de partida, en la punta de la nave
+        d.transform.Translate(Vector2.up * 0.7f);
+
+        // Lanzarlo
+        d.AddForce(Vector2.up * fuerza, ForceMode2D.Impulse);
+    }
+
+    void disparmejora()
+    {
+        Rigidbody2D d2 = (Rigidbody2D)Instantiate(disparo2, transform.position, transform.rotation);
+
+        d2.gravityScale = 0;
+
+        d2.transform.Translate(Vector2.up * 0.7f);
+
+        d2.AddForce(Vector2.up * fuerza2, ForceMode2D.Impulse);
+
+    }/*
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        // Detectar la colisión 
+
+        // Necesitamos saber contra qué hemos chocado
+        if (coll.gameObject.tag == "mejora"){
+
+            // Sonido de mod
+            sonidoMejora.GetComponent<AudioSource>().Play();
+
+            // El disparo desaparece (cuidado, si tiene eventos no se ejecutan)
+            Destroy(coll.gameObject);
+
+            // El alien desaparece (no hace falta retraso para la explosión, está en otro objeto)
+            //.GetComponent<AudioSource>().Play();
+
+
+        }
+
+
+    }*/
 }
